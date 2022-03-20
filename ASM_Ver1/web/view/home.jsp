@@ -20,14 +20,18 @@
             <p>Xin chào ${sessionScope.account.username}</p>
         </div>
         <nav class="left">
-            <table>
+                       <table>
                 <tr>
                     <!--add thông tin lần nhập hàng đó vào DB-->
                     <td><a style="text-decoration: none" href="product/add">Nhập Sản Phẩm</a></td>
                 </tr>
                 <tr>
                     <!--Xem hóa đơn, có thể click vào billID để tìm được lần nhập đó-->
-                    <td><a style="text-decoration: none" href="product/import">Các Lần Nhập Hàng Gần Đây</a></td>
+                    <td><a style="text-decoration: none" href="product/import">Các Sản Phẩm Nhập Gần Đây</a></td>
+                </tr>
+                <tr>
+                    <!--(Chức năng này cho phép quản lý kho, xóa bớt các sản phẩm đang có trong kho)-->
+                    <td><a style="text-decoration: none" href="product/bill">Hóa Đơn Gần Đây</a></td>
                 </tr>
                 <tr>
                     <!--(Chức năng này cho phép quản lý kho, xóa bớt các sản phẩm đang có trong kho)-->
@@ -47,7 +51,7 @@
                 </tr>
                 <c:forEach items="${requestScope.listStoreProduct}" var="list">
                     <tr>
-                        <td>${list.productName}</td>
+                        <td>${list.pname}</td>
                         <td>${list.quantity}</td>
                         <td>${list.idate}</td>
                     </tr>    

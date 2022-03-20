@@ -16,7 +16,7 @@ public class DeleteProductInStore extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String raw_sid = request.getParameter("id");
+        String raw_sid = request.getParameter("sid");
         int id = Integer.parseInt(raw_sid);
         StoreProductDBContext storeProductDBContext = new StoreProductDBContext();
         storeProductDBContext.deleteProduct(id);

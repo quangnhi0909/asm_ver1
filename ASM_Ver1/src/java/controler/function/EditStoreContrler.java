@@ -21,10 +21,10 @@ public class EditStoreContrler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String raw_id = request.getParameter("id");
-        int id = Integer.parseInt(raw_id);
+        String raw_sid = request.getParameter("sid");
+        int sid = Integer.parseInt(raw_sid);
         StoreProductDBContext storeDBContext = new StoreProductDBContext();
-        StoreProduct store = storeDBContext.getProductByID(id);
+        StoreProduct store = storeDBContext.getProductByID(sid);
 
         request.setAttribute("store", store);
         request.getRequestDispatcher("../viewfunction/editstore.jsp").forward(request, response);
@@ -34,21 +34,21 @@ public class EditStoreContrler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String raw_id = request.getParameter("id");
-        String raw_pname = request.getParameter("productName");
+        String raw_sid = request.getParameter("sid");
+        String raw_pname = request.getParameter("pname");
         String raw_quantity = request.getParameter("quantity");
         String raw_date = request.getParameter("idate");
         
-        int id = Integer.parseInt(raw_id);
+        int id = Integer.parseInt(raw_sid);
         String pname = raw_pname;
         int quantity = Integer.parseInt(raw_quantity);
         Date idate = Date.valueOf(raw_date);
         
         StoreProduct store = new StoreProduct();
-        store.setId(id);
-        store.setProductName(pname);
+        store.setSid(id);
+        store.setPname(pname);
         store.setQuantity(quantity);
-        store.setIdate(idate);
+        store.setIdate(idate);;
         
         StoreProductDBContext storeDBContext = new StoreProductDBContext();
         storeDBContext.updateStoreProduct(store);

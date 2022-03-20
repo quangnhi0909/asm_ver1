@@ -5,8 +5,7 @@ package model;
  * @author Hoang Quang
  */
 public class Account {
-
-    private String username;
+private String username;
     private String password;
 
     public Account(String username, String password) {

@@ -7,37 +7,30 @@ import java.sql.Date;
  * @author Hoang Quang
  */
 public class Product {
-    private int id;
+    private String pid;
     private int itime;
-    private Date idate;
-    private String seller,phone;
-    private String pName;
+    private String pname;
     private double price;
     private int quantity;
 
     public Product() {
     }
 
-    public Product(int id, int itime, Date idate, String seller, String phone, String pName, double price, int quantity) {
-        this.id = id;
+    public Product(String pid, int itime, String pname, double price, int quantity) {
+        this.pid = pid;
         this.itime = itime;
-        this.idate = idate;
-        this.seller = seller;
-        this.phone = phone;
-        this.pName = pName;
+        this.pname = pname;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public int getId() {
-        return id;
+    public String getPid() {
+        return pid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPid(String pid) {
+        this.pid = pid;
     }
-
-   
 
     public int getItime() {
         return itime;
@@ -47,36 +40,12 @@ public class Product {
         this.itime = itime;
     }
 
-    public Date getIdate() {
-        return idate;
+    public String getPname() {
+        return pname;
     }
 
-    public void setIdate(Date idate) {
-        this.idate = idate;
-    }
-
-    public String getSeller() {
-        return seller;
-    }
-
-    public void setSeller(String seller) {
-        this.seller = seller;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getpName() {
-        return pName;
-    }
-
-    public void setpName(String pName) {
-        this.pName = pName;
+    public void setPname(String pname) {
+        this.pname = pname;
     }
 
     public double getPrice() {

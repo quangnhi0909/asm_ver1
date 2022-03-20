@@ -15,10 +15,10 @@
         <script src="../js/store.js" type="text/javascript"></script>
         <title>Kho Hàng</title>
         <script>
-        function deleteProduct(id) {
+        function deleteProduct(sid) {
                 var result = confirm("Bạn có thực sự muốn xóa sản phẩm này");
                 if (result) {
-                    window.location.href = "../store/delete?id=" + id
+                    window.location.href = "../store/delete?sid=" + sid
                 }
             }
             </script>
@@ -35,7 +35,11 @@
                 </tr>
                 <tr>
                     <!--Xem hóa đơn, có thể click vào billID để tìm được lần nhập đó-->
-                    <td><a style="text-decoration: none" href="../product/import">Các Lần Nhập Hàng Gần Đây</a></td>
+                    <td><a style="text-decoration: none" href="../product/import">Các Sản Phẩm Nhập Gần Đây</a></td>
+                </tr>
+                <tr>
+                    <!--(Chức năng này cho phép quản lý kho, xóa bớt các sản phẩm đang có trong kho)-->
+                    <td><a style="text-decoration: none" href="../product/bill">Hóa Đơn Gần Đây</a></td>
                 </tr>
                 <tr>
                     <!--(Chức năng này cho phép quản lý kho, xóa bớt các sản phẩm đang có trong kho)-->
@@ -60,14 +64,14 @@
                 </tr>
                 <c:forEach items="${requestScope.listStoreProduct}" var="list">
                     <tr>
-                        <td>${list.productName}</td>
+                        <td>${list.pname}</td>
                         <td>${list.quantity}</td>
                         <td>${list.idate}</td>
                         <td>
-                            <a style="text-decoration: none" href="../store/edit?id=${list.id}">Thay Đổi Thông Tin</a>
+                            <a style="text-decoration: none" href="../store/edit?sid=${list.sid}">Thay Đổi Thông Tin</a>
                         </td>
                         <td>
-                            <a style="text-decoration: none" href="#" onclick="deleteProduct(${list.id})">Xóa Sản Phẩm</a>
+                            <a style="text-decoration: none" href="#" onclick="deleteProduct(${list.sid})">Xóa Sản Phẩm</a>
                         </td>
                     </tr>    
                 </c:forEach>
@@ -79,3 +83,4 @@
         </script>
     </body>
 </html>
+

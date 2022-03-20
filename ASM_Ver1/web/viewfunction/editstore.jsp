@@ -19,14 +19,18 @@
             <p>Xin chào ${sessionScope.account.username}</p>
         </div>
         <nav class="left">
-            <table>
+             <table>
                 <tr>
                     <!--add thông tin lần nhập hàng đó vào DB-->
                     <td><a style="text-decoration: none" href="../product/add">Nhập Sản Phẩm</a></td>
                 </tr>
                 <tr>
                     <!--Xem hóa đơn, có thể click vào billID để tìm được lần nhập đó-->
-                    <td><a style="text-decoration: none" href="../product/import">Các Lần Nhập Hàng Gần Đây</a></td>
+                    <td><a style="text-decoration: none" href="../product/import">Các Lần Nhập Gần Đây</a></td>
+                </tr>
+                <tr>
+                    <!--(Chức năng này cho phép quản lý kho, xóa bớt các sản phẩm đang có trong kho)-->
+                    <td><a style="text-decoration: none" href="../product/bill">Hóa Đơn Gần Đây</a></td>
                 </tr>
                 <tr>
                     <!--(Chức năng này cho phép quản lý kho, xóa bớt các sản phẩm đang có trong kho)-->
@@ -43,10 +47,10 @@
             <form action="../store/edit" method="post">
                 <c:set var="store" value="${requestScope.store}"></c:set>
                     ID Sản Phẩm: <br/>
-                ${store.id} <br/>
-                <input type="hidden" name="id" value="${store.id}">
+                ${store.sid} <br/>
+                <input type="hidden" name="sid" value="${store.sid}">
                 Tên Sản Phẩm: <br/>
-                <input type="text" name="productName" value="${store.productName}"/> <br/>
+                <input type="text" name="pname" value="${store.pname}"/> <br/>
                 Số lượng trong kho: <br/>
                 <input type="text" name="quantity" value="${store.quantity}"/> <br/>
                 Ngày Nhập Sản Phẩm:<br/>

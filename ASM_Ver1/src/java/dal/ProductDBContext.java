@@ -16,17 +16,13 @@ public class ProductDBContext extends DBContext {
 
     public void insertProduct(Product product) {
         String sql = "INSERT INTO [dbo].[Product]\n"
-                + "           ([importID]\n"
-                + "           ,[importDate]\n"
-                + "           ,[seller]\n"
-                + "           ,[phone]\n"
-                + "           ,[nameProduct]\n"
+                + "           ([pid]\n"
+                + "           ,[itime]\n"
+                + "           ,[pname]\n"
                 + "           ,[price]\n"
                 + "           ,[quantity])\n"
                 + "     VALUES\n"
                 + "           (?\n"
-                + "           ,?\n"
-                + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
@@ -35,13 +31,11 @@ public class ProductDBContext extends DBContext {
 
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(1, product.getItime());
-            stm.setDate(2, product.getIdate());
-            stm.setString(3, product.getSeller());
-            stm.setString(4, product.getPhone());
-            stm.setString(5, product.getpName());
-            stm.setDouble(6, product.getPrice());
-            stm.setInt(7, product.getQuantity());
+            stm.setString(1, product.getPid());
+            stm.setInt(2, product.getItime());
+            stm.setString(3, product.getPname());
+            stm.setDouble(4, product.getPrice());
+            stm.setInt(5, product.getQuantity());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,36 +57,11 @@ public class ProductDBContext extends DBContext {
         }
     }
 
-    public ArrayList<Product> getListAllProduct() {
-        ArrayList<Product> listProducts = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM Product\n"
-                    + "ORDER BY importDate DESC";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Product p = new Product();
-                p.setId(rs.getInt("productID"));
-                p.setItime(rs.getInt("importID"));
-                p.setIdate(rs.getDate("importDate"));
-                p.setSeller(rs.getString("seller"));
-                p.setPhone(rs.getString("phone"));
-                p.setpName(rs.getString("nameProduct"));
-                p.setPrice(rs.getDouble("price"));
-                p.setQuantity(rs.getInt("quantity"));
-                listProducts.add(p);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listProducts;
-    }
-    
     public ArrayList<Product> getProductWithPage(int pageindex, int pagesize) {
         ArrayList<Product> listProducts = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (ORDER BY importDate desc) as row_index FROM product) pro\n"
-                    + "WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
+            String sql = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (ORDER BY itime desc) as row_index from Product) pro\n" +
+            "WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, pageindex);
             stm.setInt(2, pagesize);
@@ -100,13 +69,15 @@ public class ProductDBContext extends DBContext {
             stm.setInt(4, pagesize);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
+//                private String pid;
+//    private int itime;
+//    private String pname;
+//    private double price;
+//    private int quantity;
                 Product p = new Product();
-                p.setId(rs.getInt("productID"));
-                p.setItime(rs.getInt("importID"));
-                p.setIdate(rs.getDate("importDate"));
-                p.setSeller(rs.getString("seller"));
-                p.setPhone(rs.getString("phone"));
-                p.setpName(rs.getString("nameProduct"));
+                p.setPid(rs.getString("pid"));
+                p.setItime(rs.getInt("itime"));
+                p.setPname(rs.getString("pname"));
                 p.setPrice(rs.getDouble("price"));
                 p.setQuantity(rs.getInt("quantity"));
                 listProducts.add(p);
@@ -116,7 +87,6 @@ public class ProductDBContext extends DBContext {
         }
         return listProducts;
     }
-
     public int count() {
         try {
             String sql = "SELECT count(*) as Total FROM Product";

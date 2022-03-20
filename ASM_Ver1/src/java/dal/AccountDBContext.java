@@ -16,7 +16,6 @@ public class AccountDBContext extends DBContext{
         try {
             String spl1 = "select username, password from Account\n"
                     + "WHERE username = ? and password = ?";
-
             PreparedStatement stm = connection.prepareStatement(spl1);
             stm.setString(1, username);
             stm.setString(2, password);

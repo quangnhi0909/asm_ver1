@@ -7,35 +7,35 @@ import java.sql.Date;
  * @author Hoang Quang
  */
 public class StoreProduct {
-    private int id;
-    private String productName;
+    private int sid;
+    private String pname;
     private int quantity;
     private Date idate;
 
     public StoreProduct() {
     }
 
-    public StoreProduct(int id, String productName, int quantity, Date idate) {
-        this.id = id;
-        this.productName = productName;
+    public StoreProduct(int sid, String pname, int quantity, Date idate) {
+        this.sid = sid;
+        this.pname = pname;
         this.quantity = quantity;
         this.idate = idate;
     }
 
-    public int getId() {
-        return id;
+    public int getSid() {
+        return sid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSid(int sid) {
+        this.sid = sid;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getPname() {
+        return pname;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setPname(String pname) {
+        this.pname = pname;
     }
 
     public int getQuantity() {
@@ -53,7 +53,5 @@ public class StoreProduct {
     public void setIdate(Date idate) {
         this.idate = idate;
     }
-    
-
     
 }

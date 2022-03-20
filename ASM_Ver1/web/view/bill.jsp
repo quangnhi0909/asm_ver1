@@ -1,20 +1,19 @@
 <%-- 
     Document   : bill
-    Created on : Mar 17, 2022, 7:34:25 AM
+    Created on : Mar 20, 2022, 11:31:24 PM
     Author     : Hoang Quang
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="../css/import.css" rel="stylesheet" type="text/css"/>
-        <script src="../js/import.js" type="text/javascript"></script>
-        <title>Nhập Hàng</title>
+        <link href="../css/bill.css" rel="stylesheet" type="text/css"/>
+        <script src="../js/bill.js" type="text/javascript"></script>
+        <title>Các Lần Nhập Hàng</title>
 
     </head>
     <body>
@@ -52,16 +51,14 @@
                 </tr>
                 <tr>
                     <td>Lần Nhập</td>
-                    <td>Tên Sản Phẩm</td>
-                    <td>Giá Sản Phẩm</td>
-                    <td>Số Lượng</td>
+                    <td>Ngày Nhập</td>
+                    <td>Tổng Số Tiền</td>
                 </tr>
-                <c:forEach items="${requestScope.listProducts}" var="p">
+                <c:forEach items="${requestScope.listBills}" var="b">
                     <tr>
-                        <td>${p.itime}</td>
-                        <td>${p.pname}</td>
-                        <td>${p.price}</td>
-                        <td>${p.quantity}</td>
+                        <td>${b.itime}</td>
+                        <td>${b.idate}</td>
+                        <td>${b.total}</td>
                     </tr>
                 </c:forEach>
             </table>

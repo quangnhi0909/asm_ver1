@@ -28,6 +28,10 @@
         <servlet-name>InportProductControler</servlet-name>
         <servlet-class>controler.InportProductControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BillControler</servlet-name>
+        <servlet-class>controler.BillControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginDBContext</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>InportProductControler</servlet-name>
         <url-pattern>/product/import</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillControler</servlet-name>
+        <url-pattern>/product/bill</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

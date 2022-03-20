@@ -1,5 +1,6 @@
 package controler.function;
 
+import dal.BillDBContext;
 import dal.ProductDBContext;
 import dal.StoreProductDBContext;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Account;
+import model.Bill;
 import model.Product;
 import model.StoreProduct;
 
@@ -36,6 +38,7 @@ public class AddProductControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String raw_pid = request.getParameter("pid");
         String raw_itime = request.getParameter("itime");
         String raw_idate = request.getParameter("idate");
         String raw_seller = request.getParameter("seller");
@@ -45,6 +48,7 @@ public class AddProductControler extends HttpServlet {
         String raw_quantity = request.getParameter("quantity");
         
         //validate value
+        String pid = raw_pid;
         int itime = Integer.parseInt(raw_itime);
         Date idate = Date.valueOf(raw_idate);
         String seller = raw_seller;
@@ -53,27 +57,40 @@ public class AddProductControler extends HttpServlet {
         Double pprice = Double.parseDouble(raw_pprice);
         int quantity = Integer.parseInt(raw_quantity);
         
+        //insert vào product
         Product product = new Product();
+        product.setPid(pid);
         product.setItime(itime);
-        product.setIdate(idate);
-        product.setSeller(seller);
-        product.setPhone(phone);
-        product.setpName(pname);
+        product.setPname(pname);
         product.setPrice(pprice);
         product.setQuantity(quantity);
+
         
         ProductDBContext productDBContext = new ProductDBContext();
         productDBContext.insertProduct(product);
         //insert vào bill
+        Bill bill = new Bill();
+        bill.setItime(itime);
+        bill.setIdate(idate);
+        bill.setSeller(seller);
+        bill.setPhone(phone);
+        bill.setIdate(idate);
+        bill.setTotal(pprice*quantity);
+        bill.setPid(pid);
+        BillDBContext billDBContext = new BillDBContext();
+        billDBContext.insertBill(bill);
+        
+
         //insert vào store product
         // insert vào store product cả ngày cùng với tên sản phẩm để có thể edit và delete
         StoreProduct storeProduct = new StoreProduct();
-        storeProduct.setProductName(pname);
+        storeProduct.setPname(pname);
         storeProduct.setQuantity(quantity);
-        
         storeProduct.setIdate(idate);
+
         StoreProductDBContext storeProductDBContext = new StoreProductDBContext();
         storeProductDBContext.insertStoreProduct(storeProduct);
+        
         response.getWriter().println("Add Successfully!");
     }
 
