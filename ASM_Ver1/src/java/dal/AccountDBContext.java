@@ -5,16 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Admin;
+import model.Account;
 
 /**
  *
  * @author Hoang Quang
  */
-public class AdminDBContext extends DBContext{
-     public Admin getAccounts(String username, String password) {
+public class AccountDBContext extends DBContext{
+     public Account getAccounts(String username, String password) {
         try {
-            String spl1 = "select username, password from Admin\n"
+            String spl1 = "select username, password from Account\n"
                     + "WHERE username = ? and password = ?";
 
             PreparedStatement stm = connection.prepareStatement(spl1);
@@ -22,13 +22,13 @@ public class AdminDBContext extends DBContext{
             stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Admin account = new Admin();
+                Account account = new Account();
                 account.setUsername(rs.getString("username"));
                 account.setPassword(rs.getString("password"));
                 return account;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

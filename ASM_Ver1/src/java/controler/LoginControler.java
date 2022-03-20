@@ -1,6 +1,6 @@
 package controler;
 
-import dal.AdminDBContext;
+import dal.AccountDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Admin;
+import model.Account;
 
 /**
  *
@@ -28,8 +28,8 @@ public class LoginControler extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        AdminDBContext adminDBContext = new AdminDBContext();
-        Admin account = adminDBContext.getAccounts(username, password);
+        AccountDBContext adminDBContext = new AccountDBContext();
+        Account account = adminDBContext.getAccounts(username, password);
         if (account == null) {
             response.getWriter().println("Login Flase!!");
         } else {

@@ -1,0 +1,44 @@
+/* 
+    Created on : Mar 17, 2022, 8:52:09 PM
+    Author     : Hoang Quang
+*/
+.login{
+    width: 300px;
+    height: 300px;
+    border: 1px dotted blue;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #e6eef3;
+    margin: auto;
+    margin-top: 10%;
+}
+h2{
+    color: #6ba2c2;
+    font-family: sans-serif;
+}
+.login input{
+    width: 150px;
+    height: 30px;
+    margin-bottom: 5px; 
+    border-radius: 5px;
+    border: 2px solid #6ba2c2;
+    padding-left: 5px; 
+}
+button{
+    background-color: #c2e5fa;
+    width: 160px;
+    height: 30px;
+    margin-bottom: 5px; 
+    border-radius: 5px;
+    /*border: 2px solid #6ba2c2;*/
+    border: none;
+    /*margin-left: 110px;*/
+    color: #0e527c;
+    font-family: sans-serif;
+}
+button:hover{
+    font-size: 14px;
+    color: #024874;
+    font-family: sans-serif;
+}
+

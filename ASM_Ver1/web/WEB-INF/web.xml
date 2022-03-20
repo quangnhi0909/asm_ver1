@@ -5,40 +5,56 @@
         <servlet-class>controler.LoginControler</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>HomeControler</servlet-name>
-        <servlet-class>controler.HomeControler</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AddProductControler</servlet-name>
-        <servlet-class>controler.AddProductControler</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>BillControler</servlet-name>
-        <servlet-class>controler.BillControler</servlet-class>
+        <servlet-class>controler.function.AddProductControler</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreControler</servlet-name>
-        <servlet-class>controler.StoreControler</servlet-class>
+        <servlet-class>controler.StoreProductControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeControler_1</servlet-name>
+        <servlet-class>controler.HomeControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditStoreContrler</servlet-name>
+        <servlet-class>controler.function.EditStoreContrler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteProductInStore</servlet-name>
+        <servlet-class>controler.function.DeleteProductInStore</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InportProductControler</servlet-name>
+        <servlet-class>controler.InportProductControler</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginDBContext</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>HomeControler</servlet-name>
-        <url-pattern>/home</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AddProductControler</servlet-name>
         <url-pattern>/product/add</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BillControler</servlet-name>
-        <url-pattern>/product/bill</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>StoreControler</servlet-name>
         <url-pattern>/product/store</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeControler_1</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditStoreContrler</servlet-name>
+        <url-pattern>/store/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteProductInStore</servlet-name>
+        <url-pattern>/store/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InportProductControler</servlet-name>
+        <url-pattern>/product/import</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

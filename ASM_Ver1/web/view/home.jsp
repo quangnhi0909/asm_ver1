@@ -10,47 +10,54 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/home.css" rel="stylesheet" type="text/css"/>
+        <script src="js/home.js" type="text/javascript"></script>
+        <title>Trang Chủ</title>
     </head>
     <body>
-        <div>
-            <p1>Xin chào ${sessionScope.account.username}</p1>
+        <div class="header">
+            <p>Xin chào ${sessionScope.account.username}</p>
         </div>
-        <div>
-            <form>
-                <table>
-                    <tr>
-                        <!--add thông tin lần nhập hàng đó vào DB-->
-                        <td><a style="text-decoration: none" href="product/add">Nhập Sản Phẩm</a></td>
-                    </tr>
-                    <tr>
-                        <!--Xem hóa đơn, có thể click vào billID để tìm được lần nhập đó-->
-                        <td><a style="text-decoration: none" href="product/bill">Các Lần Nhập Hàng Gần Đây</a></td>
-                    </tr>
-                    <tr>
-                        <!--(Chức năng này cho phép quản lý kho, xóa bớt các sản phẩm đang có trong kho)-->
-                        <td><a style="text-decoration: none" href="product/store">Kho Hàng</a></td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-        <div>
-            <table border="1px">
+        <nav class="left">
+            <table>
                 <tr>
-                    <th colspan="2">Kho Hàng Của Bạn</th>
+                    <!--add thông tin lần nhập hàng đó vào DB-->
+                    <td><a style="text-decoration: none" href="product/add">Nhập Sản Phẩm</a></td>
+                </tr>
+                <tr>
+                    <!--Xem hóa đơn, có thể click vào billID để tìm được lần nhập đó-->
+                    <td><a style="text-decoration: none" href="product/import">Các Lần Nhập Hàng Gần Đây</a></td>
+                </tr>
+                <tr>
+                    <!--(Chức năng này cho phép quản lý kho, xóa bớt các sản phẩm đang có trong kho)-->
+                    <td><a style="text-decoration: none" href="product/store">Quản Lý Kho</a></td>
+                </tr>
+            </table>
+        </nav>
+        <div class="right">
+            <table border = "1px" >
+                <tr>
+                    <th colspan="3">Các Sản Phẩm Hiện Có Trong Kho</th>
                 </tr>
                 <tr>
                     <td>Tên Sản Phẩm</td>
                     <td>Tổng Số lượng</td>
+                    <td>Ngày Nhập Về</td>
                 </tr>
-                <c:forEach items="${requestScope.listProduct}" var="list">
+                <c:forEach items="${requestScope.listStoreProduct}" var="list">
                     <tr>
                         <td>${list.productName}</td>
                         <td>${list.quantity}</td>
+                        <td>${list.idate}</td>
                     </tr>    
                 </c:forEach>
 
             </table>
         </div>
+        <div id="pagger"> </div>
+        <script> 
+            pagger('pagger',${requestScope.pageindex},${requestScope.totalpage});
+        </script>
     </body>
 </html>

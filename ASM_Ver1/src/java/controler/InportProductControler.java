@@ -1,33 +1,49 @@
 package controler;
 
+import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Account;
+import model.Product;
 
 /**
  *
  * @author Hoang Quang
  */
-public class StoreControler extends HttpServlet {
-
+public class InportProductControler extends HttpServlet {
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet StoreControler</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet StoreControler at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        //HttpSession session = request.getSession();
+        //Account adminSession = (Account) session.getAttribute("account");
+        //chuyền cho bill cái gì đó
+        //if (adminSession != null) {
+        String page = request.getParameter("page");
+        if (page == null || page.trim().length() == 0) {
+            page = "1";
         }
+        int pagesize = 10;
+        int pageindex = Integer.parseInt(page);
+        ProductDBContext productDBContext = new ProductDBContext();
+        ArrayList<Product> listProducts = productDBContext.getProductWithPage(pageindex, pagesize);
+        int numofrecords = productDBContext.count();
+        int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
+                : (numofrecords / pagesize) + 1;
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("pagesize", pagesize);
+        request.setAttribute("pageindex", pageindex);
+        request.setAttribute("listProducts", listProducts);
+        request.getRequestDispatcher("../view/import.jsp").forward(request, response);
+//        } else {
+//          trả về trang login
+//            response.getWriter().println("You need to login!!");
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

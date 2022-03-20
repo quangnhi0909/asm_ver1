@@ -4,26 +4,17 @@ package model;
  *
  * @author Hoang Quang
  */
-public class Admin {
-    private String id;
+public class Account {
+
     private String username;
     private String password;
 
-    public Admin(String id, String username, String password) {
-        this.id = id;
+    public Account(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public Admin() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public Account() {
     }
 
     public String getUsername() {
@@ -41,5 +32,5 @@ public class Admin {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
 }

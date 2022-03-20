@@ -8,18 +8,18 @@ import java.sql.Date;
  */
 public class Bill {
     private int id;
-    private int importTimes;
-    private Date dateImport;
-    private int total;
+    private int itime;
+    private Date idate;
+    private double total;
     private int productID;
 
     public Bill() {
     }
 
-    public Bill(int id, int importTimes, Date dateImport, int total, int productID) {
+    public Bill(int id, int itime, Date idate, double total, int productID) {
         this.id = id;
-        this.importTimes = importTimes;
-        this.dateImport = dateImport;
+        this.itime = itime;
+        this.idate = idate;
         this.total = total;
         this.productID = productID;
     }
@@ -32,27 +32,27 @@ public class Bill {
         this.id = id;
     }
 
-    public int getImportTimes() {
-        return importTimes;
+    public int getItime() {
+        return itime;
     }
 
-    public void setImportTimes(int importTimes) {
-        this.importTimes = importTimes;
+    public void setItime(int itime) {
+        this.itime = itime;
     }
 
-    public Date getDateImport() {
-        return dateImport;
+    public Date getIdate() {
+        return idate;
     }
 
-    public void setDateImport(Date dateImport) {
-        this.dateImport = dateImport;
+    public void setIdate(Date idate) {
+        this.idate = idate;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
@@ -63,8 +63,7 @@ public class Bill {
     public void setProductID(int productID) {
         this.productID = productID;
     }
-    
-    
+
     
     
 }
