@@ -22,27 +22,26 @@ public class HomeControler extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account adminSession = (Account) session.getAttribute("account");
-//        if (adminSession != null) {
-        String page = request.getParameter("page");
-        if (page == null || page.trim().length() == 0) {
-            page = "1";
+        if (adminSession != null) {
+            String page = request.getParameter("page");
+            if (page == null || page.trim().length() == 0) {
+                page = "1";
+            }
+            int pagesize = 10;
+            int pageindex = Integer.parseInt(page);
+            StoreProductDBContext storeDBContext = new StoreProductDBContext();
+            ArrayList<StoreProduct> listStoreProduct = storeDBContext.getStoreByPage(pageindex, pagesize);
+            int numofrecords = storeDBContext.count();
+            int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
+                    : (numofrecords / pagesize) + 1;
+            request.setAttribute("totalpage", totalpage);
+            request.setAttribute("pagesize", pagesize);
+            request.setAttribute("pageindex", pageindex);
+            request.setAttribute("listStoreProduct", listStoreProduct);
+            request.getRequestDispatcher("view/home.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("login");
         }
-        int pagesize = 10;
-        int pageindex = Integer.parseInt(page);
-        StoreProductDBContext storeDBContext = new StoreProductDBContext();
-        ArrayList<StoreProduct> listStoreProduct = storeDBContext.getStoreByPage(pageindex, pagesize);
-        int numofrecords = storeDBContext.count();
-        int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
-                : (numofrecords / pagesize) + 1;
-        request.setAttribute("totalpage", totalpage);
-        request.setAttribute("pagesize", pagesize);
-        request.setAttribute("pageindex", pageindex);
-        request.setAttribute("listStoreProduct", listStoreProduct);
-        request.getRequestDispatcher("view/home.jsp").forward(request, response);
-//        } else {
-//  truyền trả về home
-//            response.getWriter().println("You need to login!!");
-//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

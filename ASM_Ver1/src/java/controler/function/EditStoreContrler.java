@@ -9,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Account;
 import model.StoreProduct;
 
 /**
@@ -21,6 +23,9 @@ public class EditStoreContrler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account adminSession = (Account) session.getAttribute("account");
+        if (adminSession != null) {
         String raw_sid = request.getParameter("sid");
         int sid = Integer.parseInt(raw_sid);
         StoreProductDBContext storeDBContext = new StoreProductDBContext();
@@ -28,6 +33,9 @@ public class EditStoreContrler extends HttpServlet {
 
         request.setAttribute("store", store);
         request.getRequestDispatcher("../viewfunction/editstore.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("../login");
+        }
     }
 
 

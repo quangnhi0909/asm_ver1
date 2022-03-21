@@ -28,11 +28,11 @@ public class AddProductControler extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account adminSession = (Account) session.getAttribute("account");
-//        if (adminSession != null) {
+        if (adminSession != null) {
         request.getRequestDispatcher("../viewfunction/addproduct.jsp").forward(request, response);
-//        } else {
-//            response.getWriter().println("You need to login!!");
-//        }
+        } else {
+            response.sendRedirect("../login");
+        }
     }
 
     @Override
