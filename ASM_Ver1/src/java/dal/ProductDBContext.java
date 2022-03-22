@@ -20,9 +20,11 @@ public class ProductDBContext extends DBContext {
                 + "           ,[itime]\n"
                 + "           ,[pname]\n"
                 + "           ,[price]\n"
-                + "           ,[quantity])\n"
+                + "           ,[quantity]\n"
+                + "           ,[descriptionP])\n"
                 + "     VALUES\n"
                 + "           (?\n"
+                + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
@@ -32,10 +34,12 @@ public class ProductDBContext extends DBContext {
         try {
             stm = connection.prepareStatement(sql);
             stm.setString(1, product.getPid());
-            stm.setInt(2, product.getItime());
+            stm.setString(2, product.getItime());
             stm.setString(3, product.getPname());
             stm.setDouble(4, product.getPrice());
             stm.setInt(5, product.getQuantity());
+            stm.setString(6, product.getDescription());
+
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,8 +64,8 @@ public class ProductDBContext extends DBContext {
     public ArrayList<Product> getProductWithPage(int pageindex, int pagesize) {
         ArrayList<Product> listProducts = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (ORDER BY itime desc) as row_index from Product) pro\n" +
-            "WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
+            String sql = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (ORDER BY itime desc) as row_index from Product) pro\n"
+                    + "WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, pageindex);
             stm.setInt(2, pagesize);
@@ -69,17 +73,13 @@ public class ProductDBContext extends DBContext {
             stm.setInt(4, pagesize);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-//                private String pid;
-//    private int itime;
-//    private String pname;
-//    private double price;
-//    private int quantity;
                 Product p = new Product();
                 p.setPid(rs.getString("pid"));
-                p.setItime(rs.getInt("itime"));
+                p.setItime(rs.getString("itime"));
                 p.setPname(rs.getString("pname"));
                 p.setPrice(rs.getDouble("price"));
                 p.setQuantity(rs.getInt("quantity"));
+                p.setDescription(rs.getString("descriptionP"));
                 listProducts.add(p);
             }
         } catch (SQLException ex) {
@@ -87,6 +87,7 @@ public class ProductDBContext extends DBContext {
         }
         return listProducts;
     }
+
     public int count() {
         try {
             String sql = "SELECT count(*) as Total FROM Product";

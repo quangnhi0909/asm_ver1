@@ -1,12 +1,10 @@
 package controler.function;
 
 import dal.BillDBContext;
-import dal.ProductDBContext;
 import dal.StoreProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,95 +12,81 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Account;
 import model.Bill;
-import model.Product;
 import model.StoreProduct;
 
 /**
  *
  * @author Hoang Quang
  */
-public class AddProductControler extends HttpServlet {
+public class EditBillControler extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account adminSession = (Account) session.getAttribute("account");
+        //check user login or not
         if (adminSession != null) {
-        request.getRequestDispatcher("../viewfunction/addproduct.jsp").forward(request, response);
+            //get id user want to edit
+            String raw_bid = request.getParameter("bid");
+            int bid = Integer.parseInt(raw_bid);
+            //lấy bill người dùng chọn để edit
+            BillDBContext billDBContext = new BillDBContext();
+            Bill bill = billDBContext.getBillByID(bid);
+            request.setAttribute("bill", bill);
+            request.getRequestDispatcher("../viewfunction/editbill.jsp").forward(request, response);
         } else {
             response.sendRedirect("../login");
         }
     }
 
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
+        // get value
+        String raw_bid = request.getParameter("bid");
         String raw_pid = request.getParameter("pid");
         String raw_itime = request.getParameter("itime");
         String raw_idate = request.getParameter("idate");
         String raw_seller = request.getParameter("seller");
         String raw_phone = request.getParameter("phone");
-        String raw_pname = request.getParameter("pname");
-        String raw_pprice = request.getParameter("pprice");
-        String raw_quantity = request.getParameter("quantity");
-        String raw_desP = request.getParameter("desP");
+        String raw_total = request.getParameter("total");
         String raw_desB = request.getParameter("desB");
-        
         //validate value
+        int bid = Integer.parseInt(raw_bid);
         String pid = raw_pid;
         String itime = raw_itime;
         Date idate = Date.valueOf(raw_idate);
         String seller = raw_seller;
         String phone = raw_phone;
-        String pname = raw_pname;
-        Double pprice = Double.parseDouble(raw_pprice);
-        int quantity = Integer.parseInt(raw_quantity);
-        String desP = raw_desP;
+        Double total = Double.parseDouble(raw_total);
         String desB = raw_desB;
         
-        //insert vào product
-        Product product = new Product();
-        product.setPid(pid);
-        product.setItime(itime);
-        product.setPname(pname);
-        product.setPrice(pprice);
-        product.setQuantity(quantity);
-        product.setDescription(desP);
-        ProductDBContext productDBContext = new ProductDBContext();
-        productDBContext.insertProduct(product);
-        
-        //insert vào bill
+        //Update vào bill
         Bill bill = new Bill();
+        bill.setBid(bid);
         bill.setItime(itime);
         bill.setIdate(idate);
         bill.setSeller(seller);
         bill.setPhone(phone);
         bill.setIdate(idate);
-        bill.setTotal(pprice*quantity);
+        bill.setTotal(total);
         bill.setPid(pid);
         bill.setDescription(desB);
         BillDBContext billDBContext = new BillDBContext();
-        billDBContext.insertBill(bill);
+        billDBContext.UpdateBill(bill);
+        response.sendRedirect("../product/bill");
         
-
-        //insert vào store product
-        // insert vào store product cả ngày cùng với tên sản phẩm để có thể edit và delete
-        StoreProduct storeProduct = new StoreProduct();
-        storeProduct.setPname(pname);
-        storeProduct.setQuantity(quantity);
-        storeProduct.setIdate(idate);
-        storeProduct.setDescription(desP);
-
-        StoreProductDBContext storeProductDBContext = new StoreProductDBContext();
-        storeProductDBContext.insertStoreProduct(storeProduct);
-        
-        response.getWriter().println("Đã Nhập Thông Tin Thành Công!");
     }
 
-
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -27,10 +27,11 @@ public class StoreProductDBContext extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 StoreProduct s = new StoreProduct();
-                s.setSid(rs.getInt("storeID"));
+                s.setSid(rs.getInt("sid"));
                 s.setPname(rs.getString("pname"));
                 s.setIdate(rs.getDate("idate"));
                 s.setQuantity(rs.getInt("quantity"));
+                s.setDescription(rs.getString("descriptionP"));
                 listStoreProducts.add(s);
             }
         } catch (SQLException ex) {
@@ -57,9 +58,11 @@ public class StoreProductDBContext extends DBContext {
         String sql = "INSERT INTO [dbo].[StoreProduct]\n"
                 + "           ([pname]\n"
                 + "           ,[idate]\n"
-                + "           ,[quantity])\n"
+                + "           ,[quantity]\n"
+                + "           ,[descriptionP])\n"
                 + "     VALUES\n"
                 + "           (?\n"
+                + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?)";
         PreparedStatement stm = null;
@@ -69,6 +72,7 @@ public class StoreProductDBContext extends DBContext {
             stm.setString(1, storeProduct.getPname());
             stm.setDate(2, storeProduct.getIdate());
             stm.setInt(3, storeProduct.getQuantity());
+            stm.setString(4, storeProduct.getDescription());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,17 +98,18 @@ public class StoreProductDBContext extends DBContext {
         try {
             //select query
             String spl1 = "SELECT * FROM StoreProduct \n"
-                    + "WHERE storeID = ?";
+                    + "WHERE sid = ?";
             PreparedStatement stm = connection.prepareStatement(spl1);
             stm.setInt(1, sid);
 
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 StoreProduct store = new StoreProduct();
-                store.setSid(rs.getInt("storeID"));
+                store.setSid(rs.getInt("sid"));
                 store.setPname(rs.getString("pname"));
                 store.setIdate(rs.getDate("idate"));
                 store.setQuantity(rs.getInt("quantity"));
+                store.setDescription(rs.getString("descriptionP"));
                 return store;
             }
         } catch (SQLException ex) {
@@ -118,7 +123,8 @@ public class StoreProductDBContext extends DBContext {
                 + "   SET [pname] = ?\n"
                 + "      ,[idate] = ?\n"
                 + "      ,[quantity] = ?\n"
-                + " WHERE [storeID] = ?";
+                + "      ,[descriptionP] = ?\n"
+                + " WHERE [sid] = ?";
 
         PreparedStatement stm = null;
         try {
@@ -126,7 +132,8 @@ public class StoreProductDBContext extends DBContext {
             stm.setString(1, store.getPname());
             stm.setDate(2, store.getIdate());
             stm.setInt(3, store.getQuantity());
-            stm.setInt(4, store.getSid());
+            stm.setString(4, store.getDescription());
+            stm.setInt(5, store.getSid());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(StoreProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,7 +157,7 @@ public class StoreProductDBContext extends DBContext {
 
     public void deleteProduct(int sid) {
         String spl1 = "DELETE FROM [dbo].[StoreProduct]\n"
-                + "      WHERE storeID = ?";
+                + "WHERE sid = ?";
         PreparedStatement stm = null;
         try {
             stm = connection.prepareStatement(spl1);

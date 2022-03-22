@@ -20,6 +20,7 @@
     margin-left: 10px;
     margin-top: 20px;
     padding-top: 10px;
+    text-align: center;
 }
 /*LEFT*/
 .left{
@@ -53,8 +54,8 @@
 }
 /*RIGHT*/
 .right table{
-    width: 660px;
-    margin-left: 600px;
+    width: 800px;
+    margin-left: 462px;
     margin-top: 50px;
     text-align: center;
     border-color:darksalmon;
@@ -63,15 +64,21 @@
     font-size: 16px;
     color: darksalmon;
     background-color: bisque;
-    padding: 20px 20px;
+    padding: 20px;
     border: none;
 }
 .right td{
     font-size: 16px;
     color: lightsalmon;
     background-color: lemonchiffon;
-    padding: 10px 5px;
+    padding-top: 15px; 
+    padding-bottom: 15px; 
     border: none;
+}
+.right table tr td a{
+    font-size: 16px;
+    color: lightsalmon;
+    
 }
 /*PAGE*/
 #pagger{

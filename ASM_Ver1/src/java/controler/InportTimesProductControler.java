@@ -16,13 +16,13 @@ import model.Product;
  *
  * @author Hoang Quang
  */
-public class InportProductControler extends HttpServlet {
+public class InportTimesProductControler extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account adminSession = (Account) session.getAttribute("account");
-
+        //check user login or not
         if (adminSession != null) {
             String page = request.getParameter("page");
             if (page == null || page.trim().length() == 0) {
@@ -30,6 +30,7 @@ public class InportProductControler extends HttpServlet {
             }
             int pagesize = 10;
             int pageindex = Integer.parseInt(page);
+            //get product nhập gần đây
             ProductDBContext productDBContext = new ProductDBContext();
             ArrayList<Product> listProducts = productDBContext.getProductWithPage(pageindex, pagesize);
             int numofrecords = productDBContext.count();

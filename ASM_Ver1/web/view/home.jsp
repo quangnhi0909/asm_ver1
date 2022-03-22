@@ -38,18 +38,20 @@
         <div class="right">
             <table border = "1px" >
                 <tr>
-                    <th colspan="3">Các Sản Phẩm Hiện Có Trong Kho</th>
+                    <th colspan="4">Các Sản Phẩm Hiện Có Trong Kho</th>
                 </tr>
                 <tr>
                     <td>Tên Sản Phẩm</td>
                     <td>Tổng Số lượng</td>
                     <td>Ngày Nhập Về</td>
+                    <td>Trạng Thái Hiện Tại</td>
                 </tr>
                 <c:forEach items="${requestScope.listStoreProduct}" var="list">
                     <tr>
                         <td>${list.pname}</td>
                         <td>${list.quantity}</td>
-                        <td>${list.idate}</td>
+                        <td>${list.getDateFormat()}</td>
+                        <td>${list.description}</td>
                     </tr>    
                 </c:forEach>
 

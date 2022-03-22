@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Bill;
+import model.StoreProduct;
 
 /**
  *
@@ -21,9 +22,11 @@ public class BillDBContext extends DBContext {
                 + "           ,[phone]\n"
                 + "           ,[idate]\n"
                 + "           ,[total]\n"
+                + "           ,[description]\n"
                 + "           ,[pid])\n"
                 + "     VALUES\n"
                 + "           (?\n"
+                + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
@@ -33,12 +36,13 @@ public class BillDBContext extends DBContext {
 
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(1, bill.getItime());
+            stm.setString(1, bill.getItime());
             stm.setString(2, bill.getSeller());
             stm.setString(3, bill.getPhone());
             stm.setDate(4, bill.getIdate());
             stm.setDouble(5, bill.getTotal());
-            stm.setString(6, bill.getPid());
+            stm.setString(6, bill.getDescription());
+            stm.setString(7, bill.getPid());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,14 +67,18 @@ public class BillDBContext extends DBContext {
     public ArrayList<Bill> getBill() {
         ArrayList<Bill> listBills = new ArrayList<>();
         try {
-            String sql1 = "SELECT itime , idate , SUM(total) as total FROM Bill GROUP BY itime,idate";
+            String sql1 = "Select * from Bill order by idate desc";
             PreparedStatement stm = connection.prepareStatement(sql1);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Bill bill = new Bill();
-                bill.setItime(rs.getInt("itime"));
+                bill.setBid(rs.getInt("bid"));
+                bill.setItime(rs.getString("itime"));
+                bill.setSeller(rs.getString("seller"));
+                bill.setPhone(rs.getString("phone"));
                 bill.setIdate(rs.getDate("idate"));
                 bill.setTotal(rs.getDouble("total"));
+                bill.setDescription(rs.getString("description"));
                 listBills.add(bill);
             }
         } catch (SQLException ex) {
@@ -93,10 +101,13 @@ public class BillDBContext extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Bill bill = new Bill();
-                bill.setBid(rs.getInt("billID"));
-                bill.setItime(rs.getInt("itime"));
+                bill.setBid(rs.getInt("bid"));
+                bill.setItime(rs.getString("itime"));
+                bill.setSeller(rs.getString("seller"));
+                bill.setPhone(rs.getString("phone"));
                 bill.setIdate(rs.getDate("idate"));
                 bill.setTotal(rs.getDouble("total"));
+                bill.setDescription(rs.getString("description"));
                 bill.setPid(rs.getString("pid"));
                 listBills.add(bill);
             }
@@ -119,4 +130,75 @@ public class BillDBContext extends DBContext {
         }
         return -1;
     }
+
+    public Bill getBillByID(int bid) {
+        try {
+            //select query
+            String spl1 = "SELECT * FROM Bill \n"
+                    + "WHERE bid = ?";
+            PreparedStatement stm = connection.prepareStatement(spl1);
+            stm.setInt(1, bid);
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Bill bill = new Bill();
+                bill.setBid(rs.getInt("bid"));
+                bill.setItime(rs.getString("itime"));
+                bill.setSeller(rs.getString("seller"));
+                bill.setPhone(rs.getString("phone"));
+                bill.setIdate(rs.getDate("idate"));
+                bill.setTotal(rs.getDouble("total"));
+                bill.setDescription(rs.getString("description"));
+                bill.setPid(rs.getString("pid"));
+                return bill;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void UpdateBill(Bill bill) {
+        String sql1 = "UPDATE [dbo].[Bill]\n"
+                + "   SET [itime] = ?\n"
+                + "      ,[seller] = ?\n"
+                + "      ,[phone] = ?\n"
+                + "      ,[idate] = ?\n"
+                + "      ,[total] = ?\n"
+                + "      ,[description] = ?\n"
+                + "      ,[pid] = ?\n"
+                + " WHERE bid = ?";
+
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql1);
+            stm.setString(1, bill.getItime());
+            stm.setString(2, bill.getSeller());
+            stm.setString(3, bill.getPhone());
+            stm.setDate(4, bill.getIdate());
+            stm.setDouble(5, bill.getTotal());
+            stm.setString(6, bill.getDescription());
+            stm.setString(7, bill.getPid());
+            stm.setInt(8, bill.getBid());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
 }

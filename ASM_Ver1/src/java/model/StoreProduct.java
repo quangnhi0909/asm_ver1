@@ -1,25 +1,29 @@
 package model;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
  * @author Hoang Quang
  */
 public class StoreProduct {
+
     private int sid;
     private String pname;
     private int quantity;
     private Date idate;
+    private String description;
 
     public StoreProduct() {
     }
 
-    public StoreProduct(int sid, String pname, int quantity, Date idate) {
+    public StoreProduct(int sid, String pname, int quantity, Date idate, String description) {
         this.sid = sid;
         this.pname = pname;
         this.quantity = quantity;
         this.idate = idate;
+        this.description = description;
     }
 
     public int getSid() {
@@ -53,5 +57,18 @@ public class StoreProduct {
     public void setIdate(Date idate) {
         this.idate = idate;
     }
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDateFormat() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyy");
+        return simpleDateFormat.format(idate);
+    }
+
 }

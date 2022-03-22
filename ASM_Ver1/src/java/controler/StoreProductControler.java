@@ -21,27 +21,27 @@ public class StoreProductControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         Account adminSession = (Account) session.getAttribute("account");
-
+        //check uesr login or not
         if (adminSession != null) {
-        //chuyền cái gì đó
-        String page = request.getParameter("page");
-        if (page == null || page.trim().length() == 0) {
-            page = "1";
-        }
-        int pagesize = 10;
-        int pageindex = Integer.parseInt(page);
-        StoreProductDBContext storeDBContext = new StoreProductDBContext();
-        ArrayList<StoreProduct> listStoreProduct = storeDBContext.getStoreByPage(pageindex, pagesize);
-        int numofrecords = storeDBContext.count();
-        int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
-                : (numofrecords / pagesize) + 1;
-        request.setAttribute("totalpage", totalpage);
-        request.setAttribute("pagesize", pagesize);
-        request.setAttribute("pageindex", pageindex);
-        request.setAttribute("listStoreProduct", listStoreProduct);
-        request.getRequestDispatcher("../view/store.jsp").forward(request, response);
+            String page = request.getParameter("page");
+            if (page == null || page.trim().length() == 0) {
+                page = "1";
+            }
+            int pagesize = 10;
+            int pageindex = Integer.parseInt(page);
+            //get store product with page
+            StoreProductDBContext storeDBContext = new StoreProductDBContext();
+            ArrayList<StoreProduct> listStoreProduct = storeDBContext.getStoreByPage(pageindex, pagesize);
+            int numofrecords = storeDBContext.count();
+            int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
+                    : (numofrecords / pagesize) + 1;
+            request.setAttribute("totalpage", totalpage);
+            request.setAttribute("pagesize", pagesize);
+            request.setAttribute("pageindex", pageindex);
+            request.setAttribute("listStoreProduct", listStoreProduct);
+            request.getRequestDispatcher("../view/store.jsp").forward(request, response);
         } else {
             response.sendRedirect("../login");
         }

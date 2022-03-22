@@ -30,8 +30,9 @@ public class LoginControler extends HttpServlet {
 
         AccountDBContext adminDBContext = new AccountDBContext();
         Account account = adminDBContext.getAccounts(username, password);
+        //check login from user
         if (account == null) {
-            response.getWriter().println("Login Flase!!");
+            response.getWriter().println("Mật Khẩu Hoặc Tài Khoản Nhập Sai! Xin Hãy Nhập Lại!");
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("account", account);

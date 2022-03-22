@@ -20,25 +20,28 @@ public class DeleteProductInStore extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account adminSession = (Account) session.getAttribute("account");
+        //check user login or not
         if (adminSession != null) {
-        String raw_sid = request.getParameter("sid");
-        int id = Integer.parseInt(raw_sid);
-        StoreProductDBContext storeProductDBContext = new StoreProductDBContext();
-        storeProductDBContext.deleteProduct(id);
-        response.sendRedirect("../product/store");
+            //get id user want to delete
+            String raw_sid = request.getParameter("sid");
+            int id = Integer.parseInt(raw_sid);
+            //delete into store product
+            StoreProductDBContext storeProductDBContext = new StoreProductDBContext();
+            storeProductDBContext.deleteProduct(id);
+            response.sendRedirect("../product/store");
         } else {
             response.sendRedirect("../login");
         }
-}
+    }
 
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -49,7 +52,7 @@ public class DeleteProductInStore extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

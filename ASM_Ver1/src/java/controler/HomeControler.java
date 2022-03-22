@@ -22,6 +22,7 @@ public class HomeControler extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account adminSession = (Account) session.getAttribute("account");
+        //check user login or not
         if (adminSession != null) {
             String page = request.getParameter("page");
             if (page == null || page.trim().length() == 0) {
@@ -29,6 +30,7 @@ public class HomeControler extends HttpServlet {
             }
             int pagesize = 10;
             int pageindex = Integer.parseInt(page);
+            //get all product in store
             StoreProductDBContext storeDBContext = new StoreProductDBContext();
             ArrayList<StoreProduct> listStoreProduct = storeDBContext.getStoreByPage(pageindex, pagesize);
             int numofrecords = storeDBContext.count();

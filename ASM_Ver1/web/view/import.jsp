@@ -43,13 +43,14 @@
         <div class="right">
             <table border="1px">
                 <tr>
-                    <th colspan="7">Các Lần Nhập Hàng Gần Đây</th>
+                    <th colspan="7">Các Sản Phẩm Nhập Hàng Gần Đây</th>
                 </tr>
                 <tr>
                     <td>Lần Nhập</td>
                     <td>Tên Sản Phẩm</td>
                     <td>Giá Sản Phẩm</td>
                     <td>Số Lượng</td>
+                    <td>Mô Tả Sản Phẩm</td>
                 </tr>
                 <c:forEach items="${requestScope.listProducts}" var="p">
                     <tr>
@@ -57,6 +58,7 @@
                         <td>${p.pname}</td>
                         <td>${p.price}</td>
                         <td>${p.quantity}</td>
+                        <td>${p.description}</td>
                     </tr>
                 </c:forEach>
             </table>

@@ -13,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../css/bill.css" rel="stylesheet" type="text/css"/>
         <script src="../js/bill.js" type="text/javascript"></script>
-        <title>Các Lần Nhập Hàng</title>
+        <title>Hóa Đơn</title>
 
     </head>
     <body>
@@ -42,18 +42,30 @@
         <div class="right">
             <table border="1px">
                 <tr>
-                    <th colspan="7">Các Lần Nhập Hàng Gần Đây</th>
+                    <th colspan="8">Hóa Đơn Gần Đây</th>
                 </tr>
                 <tr>
                     <td>Lần Nhập</td>
+                    <td>Mã Sản Phẩm</td>
+                    <td>Người Bán</td>
+                    <td>Số Điện Thoại</td>
                     <td>Ngày Nhập</td>
                     <td>Tổng Số Tiền</td>
+                    <td>Trạng Thái Thanh Toán</td>
+                    <td>Cập Nhật</td>
                 </tr>
                 <c:forEach items="${requestScope.listBills}" var="b">
                     <tr>
                         <td>${b.itime}</td>
-                        <td>${b.idate}</td>
+                        <td>${b.pid}</td>
+                        <td>${b.seller}</td>
+                        <td>${b.phone}</td>
+                        <td>${b.getDateFormat()}</td>
                         <td>${b.total}</td>
+                        <td>${b.description}</td>
+                        <td>
+                            <a style="text-decoration: none" href="../bill/edit?bid=${b.bid}">Thay Đổi Thông Tin</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>

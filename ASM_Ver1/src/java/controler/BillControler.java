@@ -22,14 +22,16 @@ public class BillControler extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account adminSession = (Account) session.getAttribute("account");
+        //check login
         if (adminSession != null) {
-      
+
             String page = request.getParameter("page");
             if (page == null || page.trim().length() == 0) {
                 page = "1";
             }
             int pagesize = 10;
             int pageindex = Integer.parseInt(page);
+            //get bill
             BillDBContext billDBContext = new BillDBContext();
             ArrayList<Bill> listBills = billDBContext.getAllBillWithPage(pageindex, pagesize);
             int numofrecords = billDBContext.count();
@@ -57,7 +59,29 @@ public class BillControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        Account adminSession = (Account) session.getAttribute("account");
+        if (adminSession != null) {
+
+            String page = request.getParameter("page");
+            if (page == null || page.trim().length() == 0) {
+                page = "1";
+            }
+            int pagesize = 10;
+            int pageindex = Integer.parseInt(page);
+            BillDBContext billDBContext = new BillDBContext();
+            ArrayList<Bill> listBills = billDBContext.getAllBillWithPage(pageindex, pagesize);
+            int numofrecords = billDBContext.count();
+            int totalpage = (numofrecords % pagesize == 0) ? (numofrecords / pagesize)
+                    : (numofrecords / pagesize) + 1;
+            request.setAttribute("totalpage", totalpage);
+            request.setAttribute("pagesize", pagesize);
+            request.setAttribute("pageindex", pageindex);
+            request.setAttribute("listBills", listBills);
+            request.getRequestDispatcher("../view/bill.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("../login");
+        }
     }
 
     /**

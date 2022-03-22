@@ -8,21 +8,24 @@ import java.sql.Date;
  */
 public class Product {
     private String pid;
-    private int itime;
+    private String itime;
     private String pname;
     private double price;
     private int quantity;
-
+    private String description;
     public Product() {
     }
 
-    public Product(String pid, int itime, String pname, double price, int quantity) {
+    public Product(String pid, String itime, String pname, double price, int quantity, String description) {
         this.pid = pid;
         this.itime = itime;
         this.pname = pname;
         this.price = price;
         this.quantity = quantity;
+        this.description = description;
     }
+
+    
 
     public String getPid() {
         return pid;
@@ -32,11 +35,11 @@ public class Product {
         this.pid = pid;
     }
 
-    public int getItime() {
+    public String getItime() {
         return itime;
     }
 
-    public void setItime(int itime) {
+    public void setItime(String itime) {
         this.itime = itime;
     }
 
@@ -63,5 +66,15 @@ public class Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
     
 }

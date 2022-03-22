@@ -49,19 +49,21 @@
         <div class="right">
             <table border="1px">
                 <tr>
-                    <th colspan="5">Kho Hàng Của Bạn Hiện Tại</th>
+                    <th colspan="6">Kho Hàng Của Bạn Hiện Tại</th>
                 </tr>
                 <tr>
                     <td>Tên Sản Phẩm</td>
                     <td>Tổng Số lượng</td>
                     <td>Ngày Nhập Hàng</td>
-                    <td colspan="5">Cập Nhật Sản Phẩm</td>
+                    <td>Trạng Thái Hiện Tại</td>
+                    <td colspan="7">Cập Nhật Sản Phẩm</td>
                 </tr>
                 <c:forEach items="${requestScope.listStoreProduct}" var="list">
                     <tr>
                         <td>${list.pname}</td>
                         <td>${list.quantity}</td>
-                        <td>${list.idate}</td>
+                        <td>${list.getDateFormat()}</td>
+                        <td>${list.description}</td>
                         <td>
                             <a style="text-decoration: none" href="../store/edit?sid=${list.sid}">Thay Đổi Thông Tin</a>
                         </td>
